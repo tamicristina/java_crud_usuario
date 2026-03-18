@@ -34,4 +34,16 @@ public class UserRepository {
         }
         return false;
     };
+
+    public boolean update(User user){
+        for(User u : users){
+            if(u.getId() != null && u.getId().equals(user.getId())){
+                u.setAge(user.getAge());
+                u.setEmail(user.getEmail());
+                u.setName(user.getName());
+                return true;
+            }
+        }
+        return false;
+    }
 }
