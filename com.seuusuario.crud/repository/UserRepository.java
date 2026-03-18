@@ -25,4 +25,13 @@ public class UserRepository {
         }
         return null;
     }
+
+    public boolean deleteById(Long id){
+        User userById = findById(id);
+        if(userById != null){
+            users.remove(userById);
+            return true;
+        }
+        return false;
+    };
 }
