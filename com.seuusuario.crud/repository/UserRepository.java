@@ -8,8 +8,11 @@ import java.util.List;
 public class UserRepository {
     //com o ArrayList ele inicia um array vazio
     private List<User> users = new ArrayList<>();
+    private Long currentId = 1L;
 
     public void save(User user) {
+        user.setId(currentId);
+        currentId++;
         users.add(user);
     }
 
@@ -35,7 +38,6 @@ public class UserRepository {
         return false;
     }
 
-    ;
 
     public boolean update(User user) {
         for (User u : users) {

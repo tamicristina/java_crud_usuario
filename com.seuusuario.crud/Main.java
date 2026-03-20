@@ -29,15 +29,7 @@ public class Main {
                     createNewUser();
                     break;
                 case 2:
-                    List<User> allUsers = userService.getAllUsers();
-                    if (allUsers.isEmpty()) {
-                        System.out.println("Nenhum usuário encontrado");
-                    } else {
-                        for (User user : allUsers) {
-                            System.out.println(user);
-                        }
-                    }
-
+                    listAllUsers();
                     break;
                 case 3:
                     User user = findUserById();
@@ -48,8 +40,11 @@ public class Main {
                     }
                     break;
                 case 4:
-
-
+                    updateUser();
+                    break;
+                case 5:
+                    deleteUser();
+                    break;
             }
         }
     }
@@ -78,5 +73,54 @@ public class Main {
         Long id = scanner.nextLong();
         scanner.nextLine();
         return userService.getUserById(id);
+    }
+
+    private static void listAllUsers() {
+        List<User> users = userService.getAllUsers();
+        if (users.isEmpty()) {
+            System.out.println("Nenhum usuário encontrado");
+        }
+
+        for (User user : users) {
+            System.out.println(user);
+        }
+    }
+
+    private static void deleteUser() {
+        System.out.println("Informe o id do usuário a ser deletado");
+        Long id = scanner.nextLong();
+        scanner.nextLine();
+        boolean deleted = userService.deleteUser(id);
+        if (deleted) {
+            System.out.println(" ✔ Usuário deletado com sucesso");
+        } else {
+            System.out.println("❌ Usuário não encontrado");
+        }
+    }
+
+    private static void updateUser() {
+        System.out.println("Informe o id do usuário a ser atualizado");
+        Long id = scanner.nextLong();
+        User user = userService.getUserById(id);
+        scanner.nextLine();
+
+        if (user == null) {
+            System.out.println("❌ Usuário não encontrado");
+        } else {
+            System.out.println("Informe o nome do usuário");
+            var name = scanner.nextLine();
+            user.setName(name);
+
+            System.out.println("Informe o email do usuário");
+            var email = scanner.nextLine();
+            user.setEmail(email);
+
+            System.out.println("Informe a idade do usuário");
+            var age = scanner.nextInt();
+            scanner.nextLine();
+            user.setAge(age);
+            userService.updateUser(user);
+            System.out.println(" ✔ Usuário atualizado com sucesso");
+        }
     }
 }
